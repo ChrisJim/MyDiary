@@ -15,6 +15,12 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <!-- BACKAND //replace with offline files in future -->
+    <!-- We use client cookies to save the REST API token -->
+    <script src="lib/angular-cookies/angular-cookies.js"></script>
+    <!-- Backand SDK for Angular -->
+    <script src="lib/angularbknd-sdk/dist/backand.min.js"></script>
+
     <link href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -46,19 +52,19 @@ angular.module('app', ['ionic'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    
+
     .state('page2', {
       url: '/login',
       templateUrl: 'page2.html'
     })
-    
+
     .state('page3', {
       url: '/tabs',
       templateUrl: 'page3.html'
@@ -66,15 +72,17 @@ angular.module('app', ['ionic'])
     ;
 
   // if none of the above states are matched, use this as the fallback
-  
+
   $urlRouterProvider.otherwise('/login');
-  
+
+  $httpProvider.interceptors.push(httpInterceptor);
 
 });
 
 
     </script>
   </head>
+
   <body ng-app="app" animation="slide-left-right-ios7">
   <div>
     <div>
